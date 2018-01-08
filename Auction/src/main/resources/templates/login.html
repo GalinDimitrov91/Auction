@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Login</title>
+<link th:href="@{css/bootstrap.min.css}" rel="stylesheet"></link>
+<link th:href="@{css/css/style.css}" rel="stylesheet"></link>
+</head>
+<body>
+	<div th:include="registerloginmenu :: copy"></div>
+	<div class="container">
+		<h1>Login</h1>
+		<br />
+		<div th:if="${error} != null" th:text="${error}"></div>
+		<form method="post">
+			<div class="form-group">
+				<label class="form-control-label" for="inputUsername">Username</label>
+				<input type="text" class="form-control form-control-danger"
+					id="inputUsername" name="username" />
+			</div>
+			<div class="form-group">
+				<label class="form-control-label" for="inputPassword">Password</label>
+				<input type="password" class="form-control form-control-danger"
+					id="inputPassword" name="password" />
+			</div>
+			<input type="submit" class="btn btn-primary" value="Log In" />
+		</form>
+	</div>
+</body>
+</html>

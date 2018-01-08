@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+<meta charset="utf-8"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta http-equiv="Pragma" content="no-cache">
+</meta>
+<meta http-equiv="Cache-Control" content="no-cache">
+</meta>
+<meta http-equiv="Expires" content="Sat, 01 Dec 2001 00:00:00 GMT"></meta>
+
+<title>Create Auction | Home</title>
+
+<link th:href="@{css/bootstrap.min.css}" rel="stylesheet"></link>
+<link th:href="@{css/css/style.css}" rel="stylesheet"></link>
+</head>
+<body>
+
+	<div th:include="menu :: copy"></div>
+
+	<div class="container text-center">
+		<h3>Balance</h3>
+		<form class="form-horizontal" method="POST" th:object="${userForm}"
+			action="add-to-balance">
+			<input type="hidden" name="id" />
+			 <td th:if="${#fields.hasErrors('balance')}" th:errors="*{balance}">Name Error</td>
+			<div class="form-group">
+				<label class="control-label col-md-3">Deposit</label>
+				<div class="col-md-7">
+					<input type="text" class="form-control" th:field="*{balance}" />
+				</div>
+			</div>
+			<div class="form-group">
+				<input type="submit" class="btn btn-primary" value="Add to balance" />
+
+			</div>
+		</form>
+	</div>
+
+
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+
+
+</body>
+</html>

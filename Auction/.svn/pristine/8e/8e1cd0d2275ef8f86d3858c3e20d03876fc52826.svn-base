@@ -1,0 +1,78 @@
+package com.dxc.auction.ui.user;
+
+import java.security.Principal;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.dxc.auction.domain.user.DefaultUserConverter;
+import com.dxc.auction.domain.user.DefaultUserService;
+import com.dxc.auction.domain.user.User;
+import com.dxc.auction.errors.Errors;
+
+@Controller
+public class UserController {
+
+	@Autowired
+	private DefaultUserService userService;
+
+	@Autowired
+	private DefaultUserConverter userConverter;
+
+	@GetMapping("/register")
+	public String registerPage(Model model) {
+		model.addAttribute("userForm", new UserForm());
+		return "register";
+	}
+
+	@GetMapping("/login")
+	public String loginPage(@RequestParam(required = false) String error, Model model) {
+
+		if (error != null) {
+			model.addAttribute("error", Errors.WRONG_USERNAME_OR_PASSWORD);
+		}
+		return "login";
+	}
+
+	@PostMapping("/save-user")
+	public String saveUser(@Valid @ModelAttribute  UserForm userForm, BindingResult result) {
+		
+	
+		
+		User user = userConverter.convertToModel(userForm);
+		user.setBalance(0);
+		userService.save(user);
+
+		return "registerloginmenu";
+	}
+
+	@GetMapping("register-or-login")
+	public String registerAndLoginPage() {
+		return "registerloginmenu";
+	}
+
+	@GetMapping("/balance")
+	public String balancePage(Model model) {
+		model.addAttribute("userForm", new UserForm());
+		return "balance";
+	}
+
+	@PostMapping("/add-to-balance")
+	public String addBalance(@Valid @ModelAttribute UserForm userForm, BindingResult result, Principal principal) {
+		if (result.hasErrors()) {
+			return "balance";
+		}
+		User user = (User) userService.loadUserByUsername(principal.getName());
+		user.setBalance(user.getBalance() + userForm.getBalance());
+		userService.save(user);
+		return "redirect:/home";
+	}
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+<meta charset="utf-8"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta http-equiv="Pragma" content="no-cache">
+</meta>
+<meta http-equiv="Cache-Control" content="no-cache">
+</meta>
+<meta http-equiv="Expires" content="Sat, 01 Dec 2001 00:00:00 GMT"></meta>
+
+<title>Create Item | Home</title>
+
+<link th:href="@{css/bootstrap.min.css}" rel="stylesheet"></link>
+<link th:href="@{css/css/style.css}" rel="stylesheet"></link>
+</head>
+<body>
+
+	<div th:include="menu :: copy"></div>
+
+	<div class="container text-center">
+		<h3>Create Item</h3>
+		<hr></hr>
+		<form class="form-horizontal" method="POST" th:object="${itemForm}"
+			action="save-item">
+			<input type="hidden" name="id" th:field="*{id}" />
+			 <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>
+			<div class="form-group">
+				<label class="control-label col-md-3">Item Name</label>	
+				<div class="col-md-7">
+					<input type="text" class="form-control" th:field="*{name}" />
+				</div>
+			</div>
+			<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Name Error</td>
+			<div class="form-group">
+				<label class="control-label col-md-3">Description</label>
+				<div class="col-md-7">
+					<input type="text" class="form-control" th:field="*{description}" />
+				</div>
+			</div>
+			<td th:if="${#fields.hasErrors('buyNowPrice')}" th:errors="*{buyNowPrice}">Name Error</td>
+			<div class="form-group">
+				<label class="control-label col-md-3">Price</label>
+				<div class="col-md-7">
+					<input type="text" class="form-control" th:field="*{buyNowPrice}" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<input type="submit" class="btn btn-primary" value="Create" />
+
+			</div>
+		</form>
+	</div>
+
+
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+
+
+</body>
+</html>
